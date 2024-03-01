@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://cjgmyh30kd77t"]
+
+[ext_resource type="PackedScene" uid="uid://cks3rnbdq1eik" path="res://scenes/player.tscn" id="1_hsw1w"]
+[ext_resource type="PackedScene" uid="uid://b2p7kfwnr4ris" path="res://scenes/minion.tscn" id="2_t65y2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cadlv"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_nj30l"]
+sky_material = SubResource("ProceduralSkyMaterial_cadlv")
+
+[sub_resource type="Environment" id="Environment_mgiur"]
+background_mode = 2
+sky = SubResource("Sky_nj30l")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vfxpy"]
+albedo_color = Color(0.121569, 0.403922, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5apba"]
+material = SubResource("StandardMaterial3D_vfxpy")
+size = Vector3(20, 1, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bujpb"]
+points = PackedVector3Array(10.1587, 0.611111, 10.1548, -10.1587, -0.65873, -10.1548, -10.1587, -0.65873, 10.1548, -10.1587, 0.611111, -10.1548, 10.1587, -0.65873, -10.1548, -10.1587, 0.611111, 10.1548, 10.1587, -0.65873, 10.1548, 10.1587, 0.611111, -10.1548)
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mgiur")
+
+[node name="Player" parent="." instance=ExtResource("1_hsw1w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.135061, 0.5893, -1.37607)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.136307, -0.523679, -1.26732)
+mesh = SubResource("BoxMesh_5apba")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.136307, -0.523679, -1.26732)
+shape = SubResource("ConvexPolygonShape3D_bujpb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.406577, 0.913616, 0, -0.913616, -0.406577, 0, 0, 0)
+
+[node name="Minion" parent="." instance=ExtResource("2_t65y2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
